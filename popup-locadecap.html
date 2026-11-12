@@ -1,0 +1,91 @@
+<!-- ===================== POP-UP LOCA'DECAP : "Comparez ce qui est comparable" ===================== -->
+<!-- A coller juste AVANT la balise </body> du fichier index.html -->
+<style>
+  #ld-popup-fond{position:fixed;inset:0;background:rgba(20,20,20,.72);display:none;align-items:center;justify-content:center;z-index:9999;padding:16px;font-family:Arial,Helvetica,sans-serif}
+  #ld-popup-fond.ld-visible{display:flex;animation:ldFondu .3s ease}
+  @keyframes ldFondu{from{opacity:0}to{opacity:1}}
+  #ld-popup{background:#FFD200;color:#1d1d1b;max-width:520px;width:100%;max-height:92vh;overflow-y:auto;border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,.45);position:relative;animation:ldMonte .35s ease}
+  @keyframes ldMonte{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
+  #ld-popup .ld-bandeau{height:12px;border-radius:10px 10px 0 0;background:repeating-linear-gradient(45deg,#1d1d1b 0 14px,#FFD200 14px 28px)}
+  #ld-popup .ld-contenu{padding:22px 24px 24px}
+  #ld-popup .ld-fermer{position:absolute;top:18px;right:12px;background:#1d1d1b;color:#FFD200;border:0;width:34px;height:34px;border-radius:50%;font-size:20px;line-height:34px;cursor:pointer}
+  #ld-popup h2{margin:0 36px 6px 0;font-size:22px;line-height:1.2;text-transform:uppercase;font-weight:900}
+  #ld-popup .ld-slogan{display:inline-block;background:#1d1d1b;color:#FFD200;padding:4px 10px;font-weight:800;font-size:15px;margin-bottom:14px;border-radius:3px}
+  #ld-popup p{margin:0 0 10px;font-size:15px;line-height:1.45}
+  #ld-popup ul{list-style:none;margin:0 0 16px;padding:0}
+  #ld-popup li{padding:7px 0 7px 30px;position:relative;font-size:15px;line-height:1.35;border-bottom:1px solid rgba(29,29,27,.18)}
+  #ld-popup li:last-child{border-bottom:0}
+  #ld-popup .ld-moins li::before{content:"+";position:absolute;left:4px;top:5px;font-weight:900;font-size:18px;color:#b3261e}
+  #ld-popup .ld-plus{background:#1d1d1b;color:#fff;border-radius:8px;padding:14px 16px;margin-bottom:18px}
+  #ld-popup .ld-plus h3{margin:0 0 6px;color:#FFD200;font-size:16px;text-transform:uppercase}
+  #ld-popup .ld-plus li{border-bottom-color:rgba(255,255,255,.15)}
+  #ld-popup .ld-plus li::before{content:"✔";position:absolute;left:4px;top:7px;color:#FFD200;font-weight:900}
+  #ld-popup .ld-boutons{display:flex;gap:10px;flex-wrap:wrap}
+  #ld-popup .ld-btn{flex:1 1 180px;text-align:center;padding:13px 14px;border-radius:6px;font-weight:800;text-decoration:none;font-size:15px;cursor:pointer;border:2px solid #1d1d1b}
+  #ld-popup .ld-btn-noir{background:#1d1d1b;color:#FFD200}
+  #ld-popup .ld-btn-clair{background:transparent;color:#1d1d1b}
+  @media (max-width:420px){#ld-popup h2{font-size:19px}#ld-popup .ld-contenu{padding:18px 16px 18px}}
+</style>
+
+<div id="ld-popup-fond" aria-hidden="true">
+  <div id="ld-popup" role="dialog" aria-modal="true" aria-labelledby="ld-popup-titre">
+    <div class="ld-bandeau"></div>
+    <button class="ld-fermer" type="button" aria-label="Fermer">×</button>
+    <div class="ld-contenu">
+      <h2 id="ld-popup-titre">⚠ Location d'aérogommeuse : attention au prix affiché !</h2>
+      <div class="ld-slogan">Comparez ce qui est comparable</div>
+
+      <p>Certains loueurs n'affichent que le prix de <strong>l'aérogommeuse seule</strong>. Pour connaître le vrai coût de votre location, il faut ajouter :</p>
+      <ul class="ld-moins">
+        <li>la location du <strong>compresseur</strong>, indispensable pour faire fonctionner la machine ;</li>
+        <li>le coût des <strong>sacs d'abrasif</strong> ;</li>
+        <li>et le fait de rester <strong>seul face à votre chantier</strong> le week-end, sans personne à joindre jusqu'au lundi matin.</li>
+      </ul>
+
+      <div class="ld-plus">
+        <h3>Avec LOCA'DECAP</h3>
+        <ul>
+          <li><strong>Livraison et récupération</strong> du matériel sur votre chantier</li>
+          <li><strong>Formation</strong> à l'utilisation sur place</li>
+          <li><strong>EPI fournis</strong> : les équipements de protection nécessaires à la bonne réalisation de vos travaux</li>
+          <li><strong>Astreinte le samedi et le dimanche</strong> pour répondre à toutes vos questions techniques</li>
+        </ul>
+      </div>
+
+      <div class="ld-boutons">
+        <a href="#contact" class="ld-btn ld-btn-noir" data-ld-fermer>Demander un devis complet</a>
+        <a href="tel:+33642123155" class="ld-btn ld-btn-clair">📞 06 42 12 31 55</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var fond = document.getElementById('ld-popup-fond');
+  if(!fond) return;
+  var DEJA_VU = 'ld_popup_vu';
+
+  // N'affiche la fenêtre qu'une fois par visite
+  try { if (sessionStorage.getItem(DEJA_VU)) return; } catch(e) {}
+
+  function ouvrir(){
+    fond.classList.add('ld-visible');
+    fond.setAttribute('aria-hidden','false');
+    try { sessionStorage.setItem(DEJA_VU,'1'); } catch(e) {}
+  }
+  function fermer(){
+    fond.classList.remove('ld-visible');
+    fond.setAttribute('aria-hidden','true');
+  }
+
+  // Ouverture 1,5 seconde après le chargement de la page
+  window.addEventListener('load', function(){ setTimeout(ouvrir, 1500); });
+
+  fond.querySelector('.ld-fermer').addEventListener('click', fermer);
+  fond.querySelectorAll('[data-ld-fermer]').forEach(function(el){ el.addEventListener('click', fermer); });
+  fond.addEventListener('click', function(e){ if(e.target === fond) fermer(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') fermer(); });
+})();
+</script>
+<!-- =================== FIN POP-UP LOCA'DECAP =================== -->
