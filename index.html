@@ -667,7 +667,6 @@
           <option value="Véhicule / bateau / métal">Véhicule / bateau / métal</option>
           <option value="Autre">Autre</option>
         </select>
-        <a class="renvoi-atelier" id="renvoi-meubles" href="https://latelierdecarole49.com" target="_blank" rel="noopener" hidden>Pour un ou deux meubles, la location revient plus cher qu'un décapage en atelier. Notre partenaire <b>L'Atelier de Carole, à Angers&nbsp;→</b> s'en occupe pour vous : vous déposez le meuble, vous le récupérez décapé.</a>
       </div>
       <div>
         <label for="f-formule">Formule souhaitée</label>
@@ -683,7 +682,9 @@
         <textarea id="f-message" name="message" placeholder="Type de surface, dimensions approximatives, dates souhaitées..." required></textarea>
       </div>
       <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Envoyer la demande</button>
+      <input type="hidden" name="orientation" id="f-orientation" value="">
       <div class="form-msg" id="form-msg"></div>
+      <a class="renvoi-atelier" id="renvoi-meubles" href="https://latelierdecarole49.com" target="_blank" rel="noopener" hidden>Pour un ou deux meubles, la location revient plus cher qu'un décapage en atelier. Nous transmettons votre demande à notre atelier partenaire <b>L'Atelier de Carole, à Angers</b>, qui vous recontacte rapidement&nbsp;: vous déposez le meuble, vous le récupérez décapé. <b>Découvrir l'atelier&nbsp;→</b></a>
     </form>
   </div>
 </section>
@@ -967,6 +968,10 @@
     e.preventDefault();
     const form = e.target;
     const msgEl = document.getElementById('form-msg');
+    const renvoi = document.getElementById('renvoi-meubles');
+    const petitMeuble = typeof ldPetitMeuble === 'function' && ldPetitMeuble();
+    document.getElementById('f-orientation').value = petitMeuble ? "1 ou 2 meubles : à transmettre à L'Atelier de Carole" : "";
+    if(renvoi) renvoi.hidden = true;
     const data = new FormData(form);
     try{
       const res = await fetch(`https://formspree.io/f/${FORMSPREE_FORM_ID}`, {
@@ -977,6 +982,7 @@
       if(res.ok){
         msgEl.textContent = "Votre demande a bien été envoyée, nous revenons vers vous rapidement.";
         msgEl.className = 'form-msg ok';
+        if(petitMeuble && renvoi) renvoi.hidden = false;
         form.reset();
       } else {
         throw new Error('send failed');
@@ -1103,22 +1109,17 @@
 </script>
 <!-- =================== FIN POP-UP LOCA'DECAP =================== -->
 <script>
-  // Renvoi vers L'Atelier de Carole si la demande porte sur 1 ou 2 meubles
-  (function(){
+  // Détecte une demande portant sur 1 ou 2 meubles : le renvoi vers L'Atelier de Carole
+  // ne s'affiche qu'APRÈS l'envoi du formulaire, pour garder le contact (transmis à Carole)
+  function ldPetitMeuble(){
     const type = document.getElementById('f-type');
     const msg = document.getElementById('f-message');
-    const renvoi = document.getElementById('renvoi-meubles');
-    if(!type || !msg || !renvoi) return;
+    if(!type || !msg) return false;
     const motsMeuble = /\b(meubles?|commodes?|buffets?|armoires?|chaises?|tables?|bahuts?|vaisseliers?|bureaux?|bureau|fauteuils?|chevets?|coiffeuses?|secrétaires?|enfilades?)\b/i;
     const motsChantier = /\b(escaliers?|poutres?|charpentes?|volets?|fa[cç]ades?|portails?|murs?|maison|lot|plusieurs|bateaux?|v[ée]hicules?)\b/i;
-    function maj(){
-      const t = msg.value;
-      const petitMeuble = type.value === "1 ou 2 meubles" || (type.value !== "Lot de meubles (5 et plus)" && motsMeuble.test(t) && !motsChantier.test(t));
-      renvoi.hidden = !petitMeuble;
-    }
-    type.addEventListener('change', maj);
-    msg.addEventListener('input', maj);
-  })();
+    const t = msg.value;
+    return type.value === "1 ou 2 meubles" || (type.value !== "Lot de meubles (5 et plus)" && motsMeuble.test(t) && !motsChantier.test(t));
+  }
 </script>
 </body>
 </html>
