@@ -103,15 +103,19 @@
   .btn-primary:hover{background:var(--c-red-dark);border-color:var(--c-red-dark);}
   .btn-ghost-inverse{border-color:var(--c-white);color:var(--c-white);}
   .btn-ghost-inverse:hover{background:var(--c-white);color:var(--c-black);}
-  /* Bouton partenaire (AEROGOMM Grand Ouest) : largeur des deux boutons du dessus, bleu de la marque partenaire */
-  .hero .hero-cta{display:inline-grid;grid-template-columns:max-content max-content;align-self:flex-start;}
-  .btn-partenaire{grid-column:1 / -1;contain:inline-size;box-sizing:border-box;flex-direction:column;gap:0;justify-content:center;align-items:center;text-align:center;
-    background:#2f6db3;border-color:#2f6db3;color:var(--c-white);font-size:12.5px;line-height:1.45;padding:13px 20px;}
-  .btn-partenaire:hover{background:#3f85d6;border-color:#3f85d6;}
-  .btn-partenaire span{display:block;}
-  .btn-partenaire strong{display:block;white-space:nowrap;font-size:13px;font-weight:700;letter-spacing:.06em;margin-top:3px;}
-  .btn-partenaire small{display:block;font-size:11px;font-weight:500;opacity:.85;text-transform:none;letter-spacing:.02em;margin-top:2px;}
-  @media(max-width:520px){.hero .hero-cta{display:flex;flex-direction:column;align-self:stretch;}.hero-cta .btn{justify-content:center;}.btn-partenaire{contain:none;padding:13px 12px;}.btn-partenaire span{font-size:10.5px;letter-spacing:0;}}
+  /* Renvoi vers L'Atelier de Carole pour 1 ou 2 meubles (location non adaptée) */
+  .renvoi-atelier{display:block;margin-top:18px;padding:12px 14px;background:#fff6e8;border-left:3px solid #d98a1e;
+    font-size:14px;line-height:1.5;color:#4a4a4a;text-decoration:none;}
+  .renvoi-atelier b{color:var(--c-black);border-bottom:1px solid #d98a1e;}
+  .renvoi-atelier:hover b{color:#a8620b;}
+  .renvoi-atelier[hidden]{display:none;}
+  /* Lien partenaire (AEROGOMM Grand Ouest) : discret, sous les boutons du héro */
+  .lien-partenaire{display:block;margin-top:4px;align-self:flex-start;line-height:1.9;
+    font-family:var(--font-mono);font-size:12.5px;letter-spacing:.02em;color:#b8b8b8;text-decoration:none;}
+  .lien-partenaire::before{content:"";display:inline-block;vertical-align:middle;width:22px;height:1px;background:#5a5a5a;margin-right:10px;}
+  .lien-partenaire b{white-space:nowrap;}
+  .lien-partenaire b{color:var(--c-white);font-weight:600;border-bottom:1px solid #6aa3e0;padding-bottom:1px;transition:color .15s ease,border-color .15s ease;}
+  .lien-partenaire:hover b{color:#8ec4ec;border-color:#8ec4ec;}
 
   /* ===== HEADER ===== */
   header{
@@ -402,12 +406,8 @@
       <div class="hero-cta">
         <a href="#formules" class="btn btn-primary">Voir les formules</a>
         <a href="#contact" class="btn btn-ghost-inverse">Demander un devis</a>
-        <a href="https://aerogommage49.fr" class="btn btn-partenaire" target="_blank" rel="noopener">
-          <span>Vous préférez confier le chantier à un pro&nbsp;?&nbsp;→</span>
-          <small>Devis de prestation avec notre partenaire</small>
-          <strong>AEROGOMM Grand Ouest</strong>
-        </a>
       </div>
+      <a href="https://aerogommage49.fr" class="lien-partenaire" target="_blank" rel="noopener">Plutôt une prestation clé en main&nbsp;? <b>AEROGOMM Grand Ouest&nbsp;→</b></a>
       <p class="hero-surfaces">ESCALIER · POUTRES · VOLETS · CUISINE AMÉNAGÉE · TOMETTES · PORTAIL · MOBILIER · FAÇADES · PORTES · GRILLES · MURETS · MURS EN PIERRE · ARDOISE · MÉTAL · VÉHICULES · BATEAUX · MOTOS · CHARPENTE · VÉRANDA · PISCINES · GRAFFITIS · ...</p>
     </div>
     <div class="hero-visual">
@@ -461,12 +461,14 @@
       <div class="formule-cards">
         <div class="formule-card active" data-card="jour">
           <div class="f-top"><h3>Location journalière</h3><span class="f-tag">24h chrono</span></div>
-          <p>Idéale pour un chantier court : une terrasse, un portail, du mobilier. Récupération le matin, retour le lendemain.</p>
+          <p>Idéale pour un chantier court : une terrasse, un portail, un escalier, des volets. Récupération le matin, retour le lendemain.</p>
           <ul>
             <li>Matériel complet remis en main propre, avec formation complète à l'utilisation et à la maintenance</li>
             <li>Consommables de base inclus selon disponibilité</li>
+            <li>Mobilier : location adaptée à partir de 5 meubles</li>
             <li>Tarif communiqué sur devis selon le matériel choisi</li>
           </ul>
+          <a class="renvoi-atelier" href="https://latelierdecarole49.com" target="_blank" rel="noopener">Un ou deux meubles seulement&nbsp;? Confiez-les à notre atelier partenaire <b>L'Atelier de Carole, à Angers&nbsp;→</b></a>
         </div>
         <div class="formule-card" data-card="semaine">
           <div class="f-top"><h3>Location à la semaine</h3><span class="f-tag">7 jours</span></div>
@@ -653,6 +655,19 @@
       <div>
         <label for="f-email">Email</label>
         <input type="email" id="f-email" name="email" required>
+      </div>
+      <div>
+        <label for="f-type">Type de chantier</label>
+        <select id="f-type" name="type_chantier">
+          <option value="Escalier / poutres / charpente">Escalier / poutres / charpente</option>
+          <option value="Volets / portes / portail">Volets / portes / portail</option>
+          <option value="Façade / murs / pierre">Façade / murs / pierre</option>
+          <option value="Lot de meubles (5 et plus)">Lot de meubles (5 et plus)</option>
+          <option value="1 ou 2 meubles">1 ou 2 meubles</option>
+          <option value="Véhicule / bateau / métal">Véhicule / bateau / métal</option>
+          <option value="Autre">Autre</option>
+        </select>
+        <a class="renvoi-atelier" id="renvoi-meubles" href="https://latelierdecarole49.com" target="_blank" rel="noopener" hidden>Pour un ou deux meubles, la location revient plus cher qu'un décapage en atelier. Notre partenaire <b>L'Atelier de Carole, à Angers&nbsp;→</b> s'en occupe pour vous : vous déposez le meuble, vous le récupérez décapé.</a>
       </div>
       <div>
         <label for="f-formule">Formule souhaitée</label>
@@ -1086,5 +1101,23 @@
 })();
 </script>
 <!-- =================== FIN POP-UP LOCA'DECAP =================== -->
+<script>
+  // Renvoi vers L'Atelier de Carole si la demande porte sur 1 ou 2 meubles
+  (function(){
+    const type = document.getElementById('f-type');
+    const msg = document.getElementById('f-message');
+    const renvoi = document.getElementById('renvoi-meubles');
+    if(!type || !msg || !renvoi) return;
+    const motsMeuble = /\b(meubles?|commodes?|buffets?|armoires?|chaises?|tables?|bahuts?|vaisseliers?|bureaux?|bureau|fauteuils?|chevets?|coiffeuses?|secrétaires?|enfilades?)\b/i;
+    const motsChantier = /\b(escaliers?|poutres?|charpentes?|volets?|fa[cç]ades?|portails?|murs?|maison|lot|plusieurs|bateaux?|v[ée]hicules?)\b/i;
+    function maj(){
+      const t = msg.value;
+      const petitMeuble = type.value === "1 ou 2 meubles" || (type.value !== "Lot de meubles (5 et plus)" && motsMeuble.test(t) && !motsChantier.test(t));
+      renvoi.hidden = !petitMeuble;
+    }
+    type.addEventListener('change', maj);
+    msg.addEventListener('input', maj);
+  })();
+</script>
 </body>
 </html>
