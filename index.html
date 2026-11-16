@@ -156,8 +156,9 @@
   @media(max-width:860px){.hero-grid{grid-template-columns:1fr;min-height:auto;}}
   .hero-copy{padding:72px 48px 72px 0;display:flex;flex-direction:column;justify-content:center;gap:22px;}
   @media(max-width:860px){.hero-copy{padding:56px 0 32px;}}
-  .hero-copy h1{font-size:clamp(38px,6vw,62px);color:var(--c-white);}
-  .hero-copy h1 .accent{color:var(--c-red);}
+  .hero-copy h1{font-size:clamp(32px,4.6vw,52px);color:var(--c-white);}
+  .hero-copy h1 .accent,.hero-copy .hero-slogan .accent{color:var(--c-red);}
+  .hero-copy p.hero-slogan{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(18px,2.2vw,24px);line-height:1.2;color:#e6e6e6;max-width:none;margin-top:-6px;}
   .hero-copy p{font-size:17px;color:#cfcfcf;max-width:46ch;}
   .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;}
   .hero-surfaces{
@@ -403,7 +404,8 @@
   <div class="hero-grid">
     <div class="hero-copy">
       <span class="eyebrow">Location de matériel d'aérogommage</span>
-      <h1>Décapez vous-même.<br>On vous équipe.<span class="accent"> Vraiment.</span></h1>
+      <h1>Location de sableuse et d'aérogommeuse <span class="accent" style="white-space:nowrap;">à Angers</span></h1>
+      <p class="hero-slogan">Décapez vous-même. On vous équipe.<span class="accent"> Vraiment.</span></p>
       <p>LOCA'DECAP met à votre disposition du matériel professionnel de décapage par aérogommage, prêt à l'emploi, pour vos chantiers ponctuels — à la journée, à la semaine ou pour le weekend.</p>
       <div class="hero-cta">
         <a href="#formules" class="btn btn-primary">Voir les formules</a>
